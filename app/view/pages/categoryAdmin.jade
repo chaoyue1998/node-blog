@@ -1,0 +1,21 @@
+extend ../layout
+block content
+	.container
+		p
+			a.btn.btn-default(href="/admin/category/list/") 列表
+		.row
+			form.form-horizontal(action="/admin/category/save", method="POST")
+				input(type="hidden", name="category[_id]", value=category._id===undefined?"":"#{category._id}")
+				.form-group.row
+					label.col-md-2.control-label category
+					.col-md-7
+						input.form-control(type="text", name="category[name]", value=category.name===undefined?"":"#{category.name}")
+				.form-group.row
+					label.col-md-2.control-label des:
+					.col-md-7
+						textarea.form-control(type="text", name="category[des]") #{category.des}
+				.form-group.row
+					.col-md-offset-2
+						button.btn.btn-primary(type="submit") Submit
+	script(src="/public/js/admin.js")
+						

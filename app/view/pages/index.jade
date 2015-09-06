@@ -1,0 +1,31 @@
+extend ../layout
+block content
+	.container
+		.row
+			.col-md-9
+				each item in posts
+					a(href="/posts/#{item._id}")
+						h3 #{item.title}
+			.col-md-3
+				each cat in categories
+					a(href="/s?cat=#{cat._id}")
+						h3 #{cat.name}
+		nav
+			ul.pagination
+				if 1 !== currentPage
+					li
+						a(href=("#{queryStr}"+"p=#{currentPage-1}")) &laquo;
+				- var bpage = (currentPage - 4)>0?(currentPage - 4):1
+				while bpage < currentPage
+					li
+						a(href=("#{queryStr}"+"p=#{bpage}"))= bpage++
+				li.active
+					a(href=("#{queryStr}"+"p=#{currentPage}"))= currentPage
+						span.sr-only (current)
+				- var apage = currentPage+1
+				while apage < ((currentPage + 3)<(totalPage)?(currentPage + 4):(totalPage+1))
+					li
+						a(href=("#{queryStr}"+"p=#{apage}"))= apage++
+				if totalPage !== currentPage
+					li
+						a(href=("#{queryStr}"+"p=#{currentPage+1}")) &raquo;

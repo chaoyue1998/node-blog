@@ -1,0 +1,21 @@
+extend ../layout
+block content
+	.container
+		.row
+			form.form-horizontal(method="POST", action="/user/signin")
+				.form-group
+					label.col-sm-2.control-label(for="inputuserName3")  userName
+					.col-sm-5
+						input#inputuserName3.form-control(type="text", placeholder="userName", name="user[name]")
+				.form-group
+					label.col-sm-2.control-label(for="inputPassword3")  Password
+					.col-sm-5
+						input#inputPassword3.form-control(type="password", placeholder="Password", name="user[password]")
+				.form-group
+					.col-sm-5.col-md-offset-2
+						button.btn.btn-default(type="submit") 登录
+				//- .checkbox
+					//- label(style="color:#fff")
+					//- 	input(type="checkbox")
+					//- 	| Remember me
+				

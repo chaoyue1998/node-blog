@@ -1,0 +1,65 @@
+extend ../layout
+block content
+	.container
+		.row
+			.col-md-9
+				.row
+					.col-md-8
+						a(href="/posts/#{posts._id}")
+							h3 #{posts.title}
+				.row
+					.col-md-4 
+						small posted 
+							em #{posts.info.posted}
+					.col-md-3
+						small by 
+							em #{posts.author}
+				.row
+					.col-md-11
+						if posts.poster
+							if /.mp3/.test(posts.poster)
+								audio#music(src="#{posts.poster}", controls="controls")
+							else
+								img(src="#{posts.poster}", width="100%")
+							br
+						p #{posts.content}
+				ul.media-list
+					each item in comments
+						li.media
+							a.media-left(href="#comment", data-cid="#{item._id}", data-tid="#{item.from._id}")
+								img.media-object(data-src="holder.js/64x64", alt="64x64", src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iNjQiIGhlaWdodD0iNjQiIHZpZXdCb3g9IjAgMCA2NCA2NCIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+PGRlZnMvPjxyZWN0IHdpZHRoPSI2NCIgaGVpZ2h0PSI2NCIgZmlsbD0iI0VFRUVFRSIvPjxnPjx0ZXh0IHg9IjE0LjUiIHk9IjMyIiBzdHlsZT0iZmlsbDojQUFBQUFBO2ZvbnQtd2VpZ2h0OmJvbGQ7Zm9udC1mYW1pbHk6QXJpYWwsIEhlbHZldGljYSwgT3BlbiBTYW5zLCBzYW5zLXNlcmlmLCBtb25vc3BhY2U7Zm9udC1zaXplOjEwcHQ7ZG9taW5hbnQtYmFzZWxpbmU6Y2VudHJhbCI+NjR4NjQ8L3RleHQ+PC9nPjwvc3ZnPg==", data-holder-rendered="true", style="width: 64px; height: 64px;")
+							.media-body
+								h4.media-heading <span class="c_name">#{item.from.name}</span>
+								p #{item.content}
+								ul.media-list
+									if item.reply && item.reply.length > 0
+										each  reply in item.reply
+											li.media
+												a.media-left(href="#comment",data-cid="#{item._id}", data-tid="#{reply.from._id}")
+													img.media-object(data-src="holder.js/64x64", alt="64x64", src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iNjQiIGhlaWdodD0iNjQiIHZpZXdCb3g9IjAgMCA2NCA2NCIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+PGRlZnMvPjxyZWN0IHdpZHRoPSI2NCIgaGVpZ2h0PSI2NCIgZmlsbD0iI0VFRUVFRSIvPjxnPjx0ZXh0IHg9IjE0LjUiIHk9IjMyIiBzdHlsZT0iZmlsbDojQUFBQUFBO2ZvbnQtd2VpZ2h0OmJvbGQ7Zm9udC1mYW1pbHk6QXJpYWwsIEhlbHZldGljYSwgT3BlbiBTYW5zLCBzYW5zLXNlcmlmLCBtb25vc3BhY2U7Zm9udC1zaXplOjEwcHQ7ZG9taW5hbnQtYmFzZWxpbmU6Y2VudHJhbCI+NjR4NjQ8L3RleHQ+PC9nPjwvc3ZnPg==", data-holder-rendered="true", style="width: 64px; height: 64px;")
+												.media-body
+													h4.media-heading <span class="c_name">#{reply.from.name}</span> 回复 #{reply.to.name}
+													p #{reply.content}
+				.row
+					form.form-horizontal(action="/user/comment", method="POST")
+						input(type="hidden", name="comment[post]", value=posts._id===undefined?"":"#{posts._id}")
+						input(type="hidden", name="comment[cid]", id="commentId")
+						input(type="hidden", name="comment[tid]", id="commentTo")
+						.form-group.row
+							label.col-md-1.control-label#toName
+							.col-md-7
+								textarea.form-control#comment(type="text", name="comment[content]")
+						.form-group.row
+							.col-md-offset-2
+								if user
+									button.btn.btn-primary(type="submit") Submit
+								else
+									a.btn.btn-primary(href="/signin") 登录
+			.col-md-3
+				each cat in categories
+					a(href="/s?cat=#{cat._id}")
+						h3 #{cat.name}
+
+
+
+	script(src="/public/js/comment.js")

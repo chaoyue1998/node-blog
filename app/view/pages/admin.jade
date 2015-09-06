@@ -1,0 +1,45 @@
+extend ../layout
+block content
+	.container
+		p
+			a.btn.btn-default(href="/admin/posts/list/") 列表
+		.row
+			form.form-horizontal(action="/admin/posts/save", method="POST", enctype="multipart/form-data")
+				if posts._id !== undefined
+					input(type="hidden", name="posts[_id]", value="#{posts._id}")
+				.form-group.row
+					label.col-md-2.control-label title
+					.col-md-7
+						input.form-control(type="text", name="posts[title]", value=(posts.title===undefined?"":"#{posts.title}"))
+				.form-group.row
+					label.col-md-2.control-label category
+					.col-md-7
+						.checkbox
+							each item in categories
+								label.control-label
+									if posts._id && posts.category
+										input(type="checkbox", value="#{item._id}", name="posts[category]", checked=(new RegExp(item._id).test(posts.category)?"checked":undefined))
+										| #{item.name}
+									else 
+										input(type="checkbox", value="#{item._id}", name="posts[category]")
+										| #{item.name}
+						.form-inline
+							label.control-label 自定义分类:
+							input.form-control(type="text", name="posts[categoryName]")
+				.form-group.row
+					label.col-md-2.control-label author:
+					.col-md-7
+						input.form-control(type="text", name="posts[author]", value=(posts.author===undefined?"":"#{posts.author}"))
+				.form-group.row
+					label.col-md-2.control-label content
+					.col-md-7
+						textarea.form-control(type="text", name="posts[content]") #{posts.content}
+				.form-group.row
+					label.col-md-2.control-label 上传图片
+					.col-md-7
+						input(type="file", name="postimg")
+				.form-group.row
+					.col-md-offset-2
+						button.btn.btn-primary(type="submit") Submit
+						
+	script(src="/public/js/admin.js")

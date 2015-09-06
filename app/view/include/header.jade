@@ -1,0 +1,58 @@
+header#top.navbar.navbar-inverse(role="banner")
+	.container
+		.navbar-header
+			a.navbar-brand.Bootstrap(href="../") Blog
+		nav.collapse.navbar-collapse.bs-navbar-collapse
+			ul.nav.navbar-nav
+				li.active
+					a(href="/") 首页
+				li
+					a(href="/admin/posts/list/") 文章管理
+				li
+					a(href="/admin/category/list/") 分类管理
+				li
+					a(href="/admin/userlist/") 用户管理
+			ul.nav.navbar-nav.navbar-right
+				li
+					form.form-inline(role="form", action="/s", method="GET", style="padding-top:7px")
+						div.form-group
+							label.sr-only(for="exampleInputSearch") search
+							input.form-control#exampleInputSearch(type="text", name="wd")
+						button.btn.btn-default(type="submit") 搜索
+				if user
+					li 
+						a(href="") #{user.name}
+					li
+						a(href="/user/logout") 退出
+				else
+					li 
+						a(href="/signin") 登录
+					li
+						a(data-toggle="modal", data-target="#signUp") 注册
+
+.modal.fade#signUp(tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true")
+	.modal-dialog
+		.modal-content
+			.modal-header
+				button.close(type="button", aria-hidden="true", data-dismiss="modal", aria-label="Close")
+					span(aria-hidden="true") &times;
+				h4.modal-title 新用户注册
+			.modal-body
+				form.form-horizontal(method="POST", action="/user/signup", role="form")
+					.form-group
+						label.col-sm-2.control-label(for="inputuserName3")  userName
+						.col-sm-10
+							input#inputuserName3.form-control(type="text", placeholder="userName", name="user[name]")
+					.form-group
+						label.col-sm-2.control-label(for="inputPassword3")  Password
+						.col-sm-10
+							input#inputPassword3.form-control(type="password", placeholder="Password", name="user[password]")
+					.form-group
+						.col-sm-10.col-md-offset-2
+							button.btn.btn-primary(type="submit") Save
+							button.btn.btn-default(type="button", data-dismiss="modal") Close
+
+.container
+	.row
+		.page-header
+			h1= title
