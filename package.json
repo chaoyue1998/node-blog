@@ -6,11 +6,12 @@
   "dependencies": {
     "body-parser": "~1.10.0",
     "express": "~4.10.4",
+    "fs-extra": "~0.14.0",
     "jade": "~1.7.0",
     "moment": "~2.8.4",
     "mongoose": "~3.8.19",
-    "underscore": "~1.7.0",
-    "fs-extra": "~0.14.0"
+    "multer": "^1.0.3",
+    "underscore": "~1.7.0"
   },
   "devDependencies": {
     "grunt": "~0.4.5",
