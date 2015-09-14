@@ -1,4 +1,4 @@
-var _ = require("underscore")
+var _ = require("lodash")
 var Posts = require('../models/posts')
 var Category = require('../models/category')
 

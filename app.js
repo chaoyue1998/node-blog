@@ -20,7 +20,7 @@ app.use(bodyParser.urlencoded({
 }))
 app.use(bodyParser.json())
 app.use(cookieParser())
-app.use(multer({ dest: './public/uploads/'}))
+app.use(multer({ dest: './public/uploads/'}).fields([{ name: 'avatar', maxCount: 1 }]));
 app.use(session({
     secret: "blog",
     store: new MongoStore({
